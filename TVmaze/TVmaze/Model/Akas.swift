@@ -12,4 +12,4 @@ struct AkaElement: Codable {
     let name: String
 }
 
-typealias Aka = [AkaElement]
+typealias Akas = [AkaElement]

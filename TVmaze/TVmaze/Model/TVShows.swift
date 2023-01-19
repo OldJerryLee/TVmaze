@@ -37,4 +37,4 @@ enum Status: String, Codable {
     case toBeDetermined = "To Be Determined"
 }
 
-typealias TVShow = [TVShowElement]
+typealias TVShows = [TVShowElement]
