@@ -118,8 +118,10 @@ class TVShowsViewController: TVMazeDataLoadingVewController {
 
 extension TVShowsViewController: UICollectionViewDelegate {
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            let destVC = TVShowDetailsViewController()
-            let navController = UINavigationController(rootViewController: destVC)
+            let detailsViewModel = TVShowDetailsViewModel()
+            detailsViewModel.tvShow = viewModel.tvShows[indexPath.row]
+            let destinationViewController = TVShowDetailsViewController(viewModel: detailsViewModel)
+            let navController = UINavigationController(rootViewController: destinationViewController)
             present(navController, animated: true)
         }
 }

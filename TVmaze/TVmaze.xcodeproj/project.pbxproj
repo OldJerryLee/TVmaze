@@ -33,6 +33,7 @@
 		61A3AB532979E4570005F74E /* FavoritesTvShowsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A3AB522979E4570005F74E /* FavoritesTvShowsController.swift */; };
 		61A3AB572979E5420005F74E /* TVMazeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A3AB562979E5420005F74E /* TVMazeTabBarController.swift */; };
 		61A3AB5C2979EC9D0005F74E /* TVShowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A3AB5B2979EC9D0005F74E /* TVShowCollectionViewCell.swift */; };
+		61CC2483297EB8B400AEB6A7 /* TVShowDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CC2482297EB8B400AEB6A7 /* TVShowDetailsViewModel.swift */; };
 		61D26214297DEE3500B13B74 /* TVShowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D26213297DEE3500B13B74 /* TVShowsViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		61A3AB522979E4570005F74E /* FavoritesTvShowsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTvShowsController.swift; sourceTree = "<group>"; };
 		61A3AB562979E5420005F74E /* TVMazeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeTabBarController.swift; sourceTree = "<group>"; };
 		61A3AB5B2979EC9D0005F74E /* TVShowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCollectionViewCell.swift; sourceTree = "<group>"; };
+		61CC2482297EB8B400AEB6A7 /* TVShowDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsViewModel.swift; sourceTree = "<group>"; };
 		61D26213297DEE3500B13B74 /* TVShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				61D26213297DEE3500B13B74 /* TVShowsViewModel.swift */,
+				61CC2482297EB8B400AEB6A7 /* TVShowDetailsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -90,6 +93,7 @@
 		613C1FD3297AF81F0054F32D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				61A3AB502979C6C90005F74E /* TVMazeError.swift */,
 				613C1FD4297AF8340054F32D /* Constants.swift */,
 				613C1FE9297B0F0F0054F32D /* UIHelper.swift */,
 			);
@@ -107,6 +111,7 @@
 		613C1FD9297AFF600054F32D /* Label */ = {
 			isa = PBXGroup;
 			children = (
+				613C1FE5297B01A30054F32D /* TVMazeBodyLabel.swift */,
 				613C1FD6297AF96A0054F32D /* TVMazeTitleLabel.swift */,
 			);
 			path = Label;
@@ -115,6 +120,7 @@
 		613C1FDA297AFF6D0054F32D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				613C1FE1297B00DF0054F32D /* TVMazeAlertViewController.swift */,
 				61A3AB562979E5420005F74E /* TVMazeTabBarController.swift */,
 				613C1FDB297AFF870054F32D /* TVMazeDataLoadingVewController.swift */,
 			);
@@ -140,6 +146,7 @@
 		61A3AB3129784B650005F74E /* TVmaze */ = {
 			isa = PBXGroup;
 			children = (
+				61CC247E297EB61700AEB6A7 /* Extnsions */,
 				6123EC9C297DC6EE0078665E /* ViewModels */,
 				613C1FD3297AF81F0054F32D /* Utilities */,
 				61A3AB552979E5000005F74E /* Custom Views */,
@@ -153,12 +160,6 @@
 				61A3AB3B29784B6A0005F74E /* Assets.xcassets */,
 				61A3AB3D29784B6A0005F74E /* LaunchScreen.storyboard */,
 				61A3AB4029784B6A0005F74E /* Info.plist */,
-				61A3AB502979C6C90005F74E /* TVMazeError.swift */,
-				613C1FDF297B00A70054F32D /* UIViewController+Extension.swift */,
-				613C1FE1297B00DF0054F32D /* TVMazeAlertViewController.swift */,
-				613C1FE3297B013B0054F32D /* TVMazeAlertContainerView.swift */,
-				613C1FE5297B01A30054F32D /* TVMazeBodyLabel.swift */,
-				613C1FE7297B01D80054F32D /* TVMazeButton.swift */,
 			);
 			path = TVmaze;
 			sourceTree = "<group>";
@@ -193,11 +194,12 @@
 		61A3AB552979E5000005F74E /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				61CC247F297EB63400AEB6A7 /* Views */,
+				61CC2481297EB67600AEB6A7 /* Buttons */,
 				613C1FDA297AFF6D0054F32D /* ViewControllers */,
 				613C1FD9297AFF600054F32D /* Label */,
 				613C1FD8297AFF520054F32D /* ImageView */,
 				61A3AB5A2979EC780005F74E /* Cells */,
-				613C1FDD297AFFE00054F32D /* TVMazeEmptyStateView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -208,6 +210,31 @@
 				61A3AB5B2979EC9D0005F74E /* TVShowCollectionViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		61CC247E297EB61700AEB6A7 /* Extnsions */ = {
+			isa = PBXGroup;
+			children = (
+				613C1FDF297B00A70054F32D /* UIViewController+Extension.swift */,
+			);
+			path = Extnsions;
+			sourceTree = "<group>";
+		};
+		61CC247F297EB63400AEB6A7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				613C1FE3297B013B0054F32D /* TVMazeAlertContainerView.swift */,
+				613C1FDD297AFFE00054F32D /* TVMazeEmptyStateView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		61CC2481297EB67600AEB6A7 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				613C1FE7297B01D80054F32D /* TVMazeButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61CC2483297EB8B400AEB6A7 /* TVShowDetailsViewModel.swift in Sources */,
 				613C1FE0297B00A70054F32D /* UIViewController+Extension.swift in Sources */,
 				61A3AB3729784B650005F74E /* ViewController.swift in Sources */,
 				61A3AB3329784B650005F74E /* AppDelegate.swift in Sources */,
