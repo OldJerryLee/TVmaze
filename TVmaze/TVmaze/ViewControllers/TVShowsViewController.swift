@@ -8,6 +8,9 @@
 import UIKit
 
 class TVShowsViewController: TVMazeDataLoadingVewController {
+    //TODO: Put the marks
+    //TODO: Fix Layout of cells
+    //TODO: Make Logic of Status
 
     enum Section {
         case main

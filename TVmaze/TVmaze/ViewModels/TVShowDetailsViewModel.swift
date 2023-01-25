@@ -6,21 +6,20 @@
 //
 
 import Foundation
+import UIKit
 
 protocol TVShowDetailsViewModelProtocol {
-    var showLoading: (() -> Void)? { get set }
-    var hideLoading: (() -> Void)? { get set }
     var updateUI: (() -> Void)? { get set }
     var presentAlert: ((String)-> Void)? { get set }
     var tvShow: TVShowElement? { get set }
     var akas: Akas { get set }
 
     func fetchTVShowsAkas(id: Int)
+    func getRatingColor() -> UIColor
+    func getAkasText() -> String
 }
 
 class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
-    var showLoading: (() -> Void)?
-    var hideLoading: (() -> Void)?
     var updateUI: (() -> Void)?
     var presentAlert: ((String) -> Void)?
 
@@ -30,10 +29,8 @@ class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
     private let service = NetworkManager.shared
 
     func fetchTVShowsAkas(id: Int) {
-        showLoading?()
         service.getAkas(for: id) { [weak self] result in
             guard let self = self else { return }
-            self.hideLoading?()
                 switch result {
                     case .success(let akas):
                         self.akas = akas
@@ -42,5 +39,33 @@ class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
                         self.presentAlert?(error.rawValue)
             }
         }
+    }
+
+    func getRatingColor() -> UIColor {
+        guard let tvShow = tvShow, let rating = tvShow.show.rating, let average = rating.average else {
+            return .darkGray
+        }
+
+        if average < 5.0 {
+            return .systemRed
+        } else if average < 7.0 {
+            return .systemYellow
+        } else {
+            return .systemGreen
+        }
+    }
+
+    func getAkasText() -> String {
+        if akas.isEmpty { return "No akas were provided =/" }
+
+        var akaTexts: [String] = []
+
+        for aka in akas {
+            akaTexts.append(aka.name)
+        }
+
+        let akaText = "Akas: \(akaTexts.joined(separator: ", "))"
+
+        return akaText
     }
 }
