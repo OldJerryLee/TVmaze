@@ -17,6 +17,7 @@ class TVShowCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
+        setupConstraints()
     }
 
     required init?(coder: NSCoder) {
@@ -30,30 +31,53 @@ class TVShowCollectionViewCell: UICollectionViewCell {
         tvShowImageView.image = UIImage(named: "film-poster-placeholder")
         titleLabel.text = tvShow.show.name
         statusLabel.text = tvShow.show.status.rawValue
+
+        if tvShow.show.status.rawValue == "Ended" {
+            statusLabel.backgroundColor = .systemRed
+        } else {
+            statusLabel.backgroundColor = .systemGreen
+        }
     }
 
     private func configure() {
+
+        titleLabel.textColor = .white
+        titleLabel.backgroundColor = .systemGray4
+        titleLabel.layer.cornerRadius = 5
+        titleLabel.layer.borderWidth = 1
+        titleLabel.layer.borderColor = UIColor.white.cgColor
+        titleLabel.layer.masksToBounds = true
+
+        statusLabel.textColor = .white
+        statusLabel.layer.cornerRadius = 5
+        statusLabel.layer.borderWidth = 1
+        statusLabel.layer.borderColor = UIColor.white.cgColor
+        statusLabel.layer.masksToBounds = true
+
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.cornerRadius = 10
+
         addSubview(tvShowImageView)
         addSubview(titleLabel)
         addSubview(statusLabel)
+    }
 
-        let padding: CGFloat = 8
-
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             tvShowImageView.topAnchor.constraint(equalTo: topAnchor),
             tvShowImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tvShowImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tvShowImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            titleLabel.topAnchor.constraint(equalTo: tvShowImageView.bottomAnchor, constant: 12),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            titleLabel.heightAnchor.constraint(equalToConstant: 20),
+            titleLabel.bottomAnchor.constraint(equalTo: statusLabel.topAnchor, constant: -4),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            titleLabel.heightAnchor.constraint(equalToConstant: 22),
 
-            statusLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
-            statusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            statusLabel.bottomAnchor.constraint(equalTo: tvShowImageView.bottomAnchor, constant: -4),
+            statusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             statusLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
