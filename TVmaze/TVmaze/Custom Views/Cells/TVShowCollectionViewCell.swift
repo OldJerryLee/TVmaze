@@ -24,7 +24,10 @@ class TVShowCollectionViewCell: UICollectionViewCell {
     }
 
     func set(tvShow: TVShowElement) {
-        tvShowImageView.downloadImage(fromUrl: tvShow.show.image.original)
+        if let image = tvShow.show.image, let original = image.original {
+            tvShowImageView.downloadImage(fromUrl: original)
+        }
+        tvShowImageView.image = UIImage(named: "film-poster-placeholder")
         titleLabel.text = tvShow.show.name
         statusLabel.text = tvShow.show.status.rawValue
     }

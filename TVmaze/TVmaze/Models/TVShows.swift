@@ -26,13 +26,14 @@ struct Show: Codable {
     let name: String
     let status: Status
     let rating: Rating?
-    let image: Image
+    let image: Image?
     let summary: String?
 }
 
 // MARK: - Image
 struct Image: Codable {
-    let medium, original: String
+    let medium: String?
+    let original: String?
 }
 
 // MARK: - Rating

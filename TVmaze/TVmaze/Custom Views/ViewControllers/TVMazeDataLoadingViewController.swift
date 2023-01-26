@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TVMazeDataLoadingVewController: UIViewController {
+class TVMazeDataLoadingViewController: UIViewController {
     var containerView: UIView!
     var emptyStateView: TVMazeEmptyStateView!
 

@@ -7,8 +7,7 @@
 
 import UIKit
 
-class TVShowsViewController: TVMazeDataLoadingVewController {
-    //TODO: Put the marks
+class TVShowsViewController: TVMazeDataLoadingViewController {
     //TODO: Fix Layout of cells
     //TODO: Make Logic of Status
 
@@ -16,8 +15,10 @@ class TVShowsViewController: TVMazeDataLoadingVewController {
         case main
     }
 
+    //MARK: ViewModel
     private var viewModel: TVShowsViewModelProtocol
 
+    //MARK: UI
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, TVShowElement>!
 
@@ -110,7 +111,10 @@ class TVShowsViewController: TVMazeDataLoadingVewController {
         }
 
         viewModel.updateUI = { [weak self] in
-            self?.updateUI(with: (self?.viewModel.tvShows)!)
+            guard let tvShows = self?.viewModel.tvShows else {
+                return
+            }
+            self?.updateUI(with: tvShows)
         }
 
         viewModel.presentAlert = { [weak self] error in
@@ -119,6 +123,7 @@ class TVShowsViewController: TVMazeDataLoadingVewController {
     }
 }
 
+//MARK: UICollectionViewDelegate
 extension TVShowsViewController: UICollectionViewDelegate {
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             let detailsViewModel = TVShowDetailsViewModel()
@@ -129,6 +134,7 @@ extension TVShowsViewController: UICollectionViewDelegate {
         }
 }
 
+//MARK: UISearchBarDelegate
 extension TVShowsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let filter = searchBar.text, !filter.isEmpty else { return }

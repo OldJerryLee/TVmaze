@@ -17,6 +17,8 @@ protocol TVShowDetailsViewModelProtocol {
     func fetchTVShowsAkas(id: Int)
     func getRatingColor() -> UIColor
     func getAkasText() -> String
+    func getAverageText() -> String
+    func getSummaryText() -> String
 }
 
 class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
@@ -67,5 +69,19 @@ class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
         let akaText = "Akas: \(akaTexts.joined(separator: ", "))"
 
         return akaText
+    }
+
+    func getAverageText() -> String {
+        if let average = tvShow?.show.rating?.average {
+            return average.description
+        }
+        return  "N/R"
+    }
+
+    func getSummaryText() -> String {
+        if let summary = tvShow?.show.summary {
+            return summary.stripOutHtml() ?? "Unable to fix the text"
+        }
+        return "No summary was provided =/"
     }
 }

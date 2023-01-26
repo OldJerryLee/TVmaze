@@ -7,11 +7,11 @@
 
 import UIKit
 
-class TVShowDetailsViewController: TVMazeDataLoadingVewController {
-    //TODO: Put the marks 
-
+class TVShowDetailsViewController: TVMazeDataLoadingViewController {
+    //MARK: ViewModel
     private var viewModel: TVShowDetailsViewModelProtocol
 
+    //MARK: UI
     let scrollView = UIScrollView()
     let stackView = UIStackView()
     let containerStackView = UIStackView()
@@ -19,7 +19,8 @@ class TVShowDetailsViewController: TVMazeDataLoadingVewController {
     let avatarImageView = TVMazeImageView(frame: .zero)
     let ratingLabel = TVMazeTitleLabel(textAlignment: .left, fontSize: 24)
     let akasLabel = TVMazeSecondaryTitleLabel(fontSize: 18)
-    let sumaryLabel = TVMazeBodyLabel(textAlignment: .justified)
+    let summaryLabel = TVMazeBodyLabel(textAlignment: .justified)
+    let actionButton = TVMazeButton(color: .systemGreen, title: "Favorite", systemImageName: "star")
 
     init(viewModel: TVShowDetailsViewModelProtocol) {
         self.viewModel = viewModel
@@ -34,14 +35,15 @@ class TVShowDetailsViewController: TVMazeDataLoadingVewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBind()
-        //TODO: Remove Force
-        viewModel.fetchTVShowsAkas(id: (viewModel.tvShow?.show.id)!)
+        if let id = viewModel.tvShow?.show.id {
+            viewModel.fetchTVShowsAkas(id: id)
+        }
         configureViewController()
         configureUIElements()
         setupConstraints()
     }
 
-    func configureUIElements() {
+    private func configureUIElements() {
         settingUIElements()
 
         stackView.spacing = 8
@@ -69,32 +71,24 @@ class TVShowDetailsViewController: TVMazeDataLoadingVewController {
         ratingLabel.layer.cornerRadius = 25
         ratingLabel.layer.masksToBounds = true
 
-        sumaryLabel.numberOfLines = 0
+        summaryLabel.numberOfLines = 0
 
         akasLabel.numberOfLines = 0
         akasLabel.textAlignment = .center
+
+        actionButton.addTarget(self, action: #selector(favoriteTVShow), for: .touchUpInside)
     }
 
-    func settingUIElements() {
-        //TODO: Remove Force
-        avatarImageView.downloadImage(fromUrl: (viewModel.tvShow?.show.image.original)!)
-
-        //TODO: Put this logic on VM
-        if let average = viewModel.tvShow?.show.rating?.average {
-            ratingLabel.text = average.description
-        } else {
-            ratingLabel.text = "N/R"
+    private func settingUIElements() {
+        if let image = viewModel.tvShow?.show.image, let original = image.original {
+            avatarImageView.downloadImage(fromUrl: original)
         }
-
-        //TODO: Put this logic on VM
-        if let summary = viewModel.tvShow?.show.summary {
-            sumaryLabel.text = summary.stripOutHtml()
-        } else {
-            sumaryLabel.text = "No summary was provided =/"
-        }
+        avatarImageView.image = UIImage(named: "film-poster-placeholder")
+        ratingLabel.text = viewModel.getAverageText()
+        summaryLabel.text = viewModel.getSummaryText()
     }
 
-    func setupConstraints() {
+    private func setupConstraints() {
         view.addSubview(scrollView)
         view.addSubview(ratingLabel)
 
@@ -102,7 +96,8 @@ class TVShowDetailsViewController: TVMazeDataLoadingVewController {
 
         stackView.addArrangedSubview(avatarImageView)
         stackView.addArrangedSubview(containerStackView)
-        containerStackView.addArrangedSubview(sumaryLabel)
+        stackView.addArrangedSubview(actionButton)
+        containerStackView.addArrangedSubview(summaryLabel)
         containerStackView.addArrangedSubview(akasLabel)
 
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,7 +139,7 @@ class TVShowDetailsViewController: TVMazeDataLoadingVewController {
         }
     }
 
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
@@ -153,5 +148,18 @@ class TVShowDetailsViewController: TVMazeDataLoadingVewController {
 
     @objc func dismissVC() {
         dismiss(animated: true)
+    }
+
+    @objc func favoriteTVShow() {
+        PersistenceManager.updatewith(favorite: viewModel.tvShow!, actionType: .add) { [weak self] error in
+            guard let self = self else { return }
+
+            guard let error = error else {
+                self.presentTVMazeAlertOnMainThread(title: "Success!", message: "You have successfully favorited this user =DD", buttonTitle: "Hooray!")
+                return
+            }
+
+            self.presentTVMazeAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+        }
     }
 }

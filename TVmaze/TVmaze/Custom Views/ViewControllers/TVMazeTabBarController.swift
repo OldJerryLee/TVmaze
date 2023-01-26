@@ -22,7 +22,7 @@ class TVMazeTabBarController: UITabBarController {
     }
 
     func createFavoritesNavigationController() -> UINavigationController {
-        let favoriteListVC = FavoritesTVShowsViewController()
+        let favoriteListVC = FavoritesTvShowsViewController(viewModel: FavoritesTVShowsViewModel())
         favoriteListVC.title = "Favorites"
         favoriteListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         return UINavigationController(rootViewController: favoriteListVC)
